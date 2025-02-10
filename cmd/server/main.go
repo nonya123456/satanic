@@ -17,7 +17,7 @@ func main() {
 			log.Fatal(err)
 		}
 	} else {
-		log.Println("Running server")
+		log.Println("Running server for debugging")
 		ebiten.SetWindowSize(800, 600)
 		ebiten.SetWindowTitle("Server Game")
 		if err := ebiten.RunGame(game); err != nil {
