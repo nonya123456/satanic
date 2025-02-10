@@ -1,14 +1,24 @@
 namespace data;
 
+table Position {
+    x: float;
+    y: float;
+}
+
 table PingMessageData {
 }
 
 table PongMessageData {
 }
 
+table GameStateMessageData {
+    position: Position;
+}
+
 union MessageData {
     PingMessageData,
     PongMessageData,
+    GameStateMessageData,
 }
 
 table Message {

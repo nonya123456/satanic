@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"sync"
 
 	"github.com/nonya123456/satanic/protocol"
 	"github.com/nonya123456/satanic/protocol/data"
@@ -10,6 +11,8 @@ import (
 
 type Server struct {
 	listener *kcp.Listener
+	sessions []*kcp.UDPSession
+	mu       sync.Mutex
 }
 
 func NewServer(addr string) (*Server, error) {
@@ -28,7 +31,20 @@ func (s *Server) Listen() {
 			log.Fatal(err)
 			continue
 		}
+
+		s.mu.Lock()
+		s.sessions = append(s.sessions, conn)
+		s.mu.Unlock()
 		go handleConnection(conn)
+	}
+}
+
+func (s *Server) Broadcast(msg *data.MessageDataT) {
+	for _, sess := range s.sessions {
+		err := protocol.WriteMessage(sess, msg)
+		if err != nil {
+			log.Println(err)
+		}
 	}
 }
 
