@@ -1,0 +1,18 @@
+namespace data;
+
+table PingMessageData {
+}
+
+table PongMessageData {
+}
+
+union MessageData {
+    PingMessageData,
+    PongMessageData,
+}
+
+table Message {
+    data: MessageData;
+}
+
+root_type Message;
