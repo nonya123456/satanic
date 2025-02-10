@@ -3,7 +3,6 @@ package main
 import (
 	"io"
 	"log"
-	"net"
 
 	"github.com/nonya123456/satanic/protocol"
 	"github.com/nonya123456/satanic/protocol/data"
@@ -11,7 +10,7 @@ import (
 )
 
 type Session struct {
-	conn net.Conn
+	conn *kcp.UDPSession
 }
 
 func NewSession(addr string) (*Session, error) {
